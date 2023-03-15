@@ -8,7 +8,52 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <nav id="nav-bar">
+        <button id="view-high-scores">View High Scores</button>
+        <p>Time: <sec id="timer">0</sec></p>
+    </nav>
     
+    <section id="home-page">
+        <h1>Coding Quiz Challenge</h1>
+        <p>
+            Try to answer the following code-related questions within the time limit. 
+            Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+        </p>
+        <button id="start-quiz">Start Quiz</button>
+    </section>
+    
+    <section id="questions-page">
+        <h2>{QUESTION GOES HERE}</h2>
+        <ol>
+            <li>{option1}</li>
+            <li>{option1}</li>
+            <li>{option1}</li>
+            <li>{option1}</li>
+        </ol>
+        <p>{Correct/Wrong Msg}</p>
+    </section>
+
+    <section id="results-page">
+        <h2>All done!</h2>
+        <p>Your final score is <sec id="final-score"></sec></p>
+        <form id="initials-form">
+            <label for="initials">Enter initials:</label>
+            <input type="text" id="initials" name="initials">
+            <button type="submit" form="initials-form" id="initials-submit">Submit</button>
+        </form>
+    </section>
+
+    <section id="high-scores-page">
+        <h2>High Scores</h2>
+        <ol id="high-scores-list">
+            <li>first</li>
+            <li>second</li>
+            <li>third</li>
+        </ol>
+        <button id="go-back">Go Back</button>
+        <button id="clear-high-scores">Clear High Scores</button>
+    </section>
+
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
