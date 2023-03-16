@@ -25,10 +25,10 @@
     <section id="questions-page">
         <h2>{QUESTION GOES HERE}</h2>
         <ol>
-            <li>{option1}</li>
-            <li>{option1}</li>
-            <li>{option1}</li>
-            <li>{option1}</li>
+            <li>{choice1}</li>
+            <li>{choice2}</li>
+            <li>{choice3}</li>
+            <li>{choice4}</li>
         </ol>
         <p>{Correct/Wrong Msg}</p>
     </section>
@@ -38,7 +38,7 @@
         <p>Your final score is <sec id="final-score"></sec></p>
         <form id="initials-form">
             <label for="initials">Enter initials:</label>
-            <input type="text" id="initials" name="initials">
+            <input type="text" id="initials" name="initials" maxlength="2">
             <button type="submit" form="initials-form" id="initials-submit">Submit</button>
         </form>
     </section>
@@ -46,9 +46,6 @@
     <section id="high-scores-page">
         <h2>High Scores</h2>
         <ol id="high-scores-list">
-            <li>first</li>
-            <li>second</li>
-            <li>third</li>
         </ol>
         <button id="go-back">Go Back</button>
         <button id="clear-high-scores">Clear High Scores</button>
