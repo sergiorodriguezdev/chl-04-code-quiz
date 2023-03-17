@@ -8,7 +8,7 @@ var questions = [
             "choice 3",
             "choice 4"
         ],
-        answerIdx: 1 
+        answerIdx: 0 
     },
     {
         question: "question 2",
@@ -18,7 +18,7 @@ var questions = [
             "choice 3",
             "choice 4"
         ],
-        answerIdx: 2 
+        answerIdx: 1 
     },
     {
         question: "question 3",
@@ -28,7 +28,7 @@ var questions = [
             "choice 3",
             "choice 4"
         ],
-        answerIdx: 3
+        answerIdx: 2
     },
     {
         question: "question 4",
@@ -38,8 +38,8 @@ var questions = [
             "choice 3",
             "choice 4"
         ],
-        answerIdx: 4
-    },
+        answerIdx: 3
+    }
 ];
 
 // Global variables
@@ -89,9 +89,6 @@ var btnStartQuiz = document.getElementById("start-quiz");
 btnStartQuiz.addEventListener("click", function() {
     // Shuffle questions array
 
-    currentQuestionIdx = 0;
-
-    setPageVisibility("questions");
 
     // Initialize timer
     timer = 75;
@@ -99,8 +96,8 @@ btnStartQuiz.addEventListener("click", function() {
         timer--;
         intervalTimer.textContent = timer;
 
-        // Once time runs out, stop counter
-        if (timer === 0) {
+        // Once time runs out, stop timer
+        if (timer <= 0) {
             clearInterval(interval);
             
             setPageVisibility("results")
@@ -109,7 +106,83 @@ btnStartQuiz.addEventListener("click", function() {
         }
 
     }, 1000);
+
+    currentQuestionIdx = 0;
+    setPageVisibility("questions");
+    intervalTimer.textContent = timer;
+    populateQuestion();
 });
+
+// Get questions-page children elements
+var questionHeader = document.getElementById("question");
+var lstChoices = document.getElementById("choices");
+var message = document.getElementById("msg");
+
+// questions-page listeners
+// Choice on click listener
+lstChoices.addEventListener("click", function(event) {
+    // event.preventDefault();
+
+    // Grab element that was clicked. If it's a li element, then check if selected choice is correct answer. 
+    // Otherwise, stop execution
+    var choiceEl = event.target;
+    
+    if (choiceEl.matches("li")){
+        // Grab the data-* attribute from the li element that was clicked
+        var clickedIdx = parseInt(choiceEl.getAttribute("data-choice-idx"));
+
+        // Compare the selection with index of the correct answer
+        // If correct, then move on to next question
+        //  else, subtract penalty
+        // Move on to next question
+        if (clickedIdx === questions[currentQuestionIdx].answerIdx) {
+            message.textContent = "Correct!";
+        } else {
+            message.textContent = "Wrong :(";
+            timer -= penalty;
+        }
+
+        currentQuestionIdx++;
+        populateQuestion();
+    }
+    else {
+        return;
+    }
+})
+
+// Populate question page elements
+function populateQuestion() {
+    if (currentQuestionIdx === 0) {
+        message.textContent = "";
+    } else if (currentQuestionIdx >= questions.length) {
+        clearInterval(interval);
+            
+        setPageVisibility("results")
+
+        finalScore.textContent = timer;
+
+        return;
+    }
+
+    questionHeader.textContent = questions[currentQuestionIdx].question;
+
+    // Remove all children elements from choices list ol element
+    while (lstChoices.firstChild) {
+        lstChoices.removeChild(lstChoices.lastChild);
+    };
+    
+    // Loop through all current question choices and create li elements for each one.
+    // Add a data-* attribute that will be used to compare with correct answer
+    // Append node to list of choices ol element
+    questions[currentQuestionIdx].choices.forEach(function(choice, index) {
+        var tmpChoice = document.createElement("li");
+
+        tmpChoice.textContent = choice;
+        tmpChoice.setAttribute("data-choice-idx", index);
+
+        lstChoices.appendChild(tmpChoice);
+    });
+}
 
 // Get results-page children elements
 var finalScore = document.getElementById("final-score");
@@ -153,6 +226,10 @@ btnInitialsSubmit.addEventListener("click", function(event) {
 
     // Save high scores objects (array) to localStorage
     localStorage.setItem("Quiz-High-Scores", JSON.stringify(highScores));
+
+    // Move to high scores page
+    txtInitials.value = "";
+    setPageVisibility("high-scores")
 });
 
 // Get high-scores-page children elements
@@ -181,6 +258,10 @@ btnClearHS.addEventListener("click", function() {
 // Initialize web app
 function init() {
     setPageVisibility("home");
+
+    timer = 0;
+    intervalTimer.textContent = timer;
+    clearInterval(interval);
 }
 
 // This will hide/show the different sections and their children elements in the HTML based on the value provided
