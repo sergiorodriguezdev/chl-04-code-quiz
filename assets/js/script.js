@@ -1,5 +1,5 @@
 // Array of questions objects
-var questions = [
+const questions = [
     {
         question: "question 1",
         choices: [
@@ -66,6 +66,14 @@ btnViewHS.addEventListener("click", function() {
     // Hide other pages, show high scores
     setPageVisibility("high-scores");
 
+    // Call load high scores function
+    loadHS();
+});
+
+function loadHS() {
+    // Remove all children elements from high scores list ol element
+    removeAllChildren(lstHighScores);
+
     // Load high scores objects (array) from localStorage
     var highScores = JSON.parse(localStorage.getItem("Quiz-High-Scores"));
 
@@ -79,7 +87,7 @@ btnViewHS.addEventListener("click", function() {
             lstHighScores.appendChild(liEl);
         }
     }
-});
+}
 
 // Get home-page children elements
 var btnStartQuiz = document.getElementById("start-quiz");
@@ -167,9 +175,7 @@ function populateQuestion() {
     questionHeader.textContent = questions[currentQuestionIdx].question;
 
     // Remove all children elements from choices list ol element
-    while (lstChoices.firstChild) {
-        lstChoices.removeChild(lstChoices.lastChild);
-    };
+    removeAllChildren(lstChoices);
     
     // Loop through all current question choices and create li elements for each one.
     // Add a data-* attribute that will be used to compare with correct answer
@@ -230,6 +236,8 @@ btnInitialsSubmit.addEventListener("click", function(event) {
     // Move to high scores page
     txtInitials.value = "";
     setPageVisibility("high-scores")
+    // Call load high scores function
+    loadHS();
 });
 
 // Get high-scores-page children elements
@@ -250,9 +258,7 @@ btnClearHS.addEventListener("click", function() {
     localStorage.setItem("Quiz-High-Scores", "[]");
 
     // Remove all children elements from high scores list ol element
-    while (lstHighScores.firstChild) {
-        lstHighScores.removeChild(lstHighScores.lastChild);
-    };
+    removeAllChildren(lstHighScores);
 });
 
 // Initialize web app
@@ -262,6 +268,9 @@ function init() {
     timer = 0;
     intervalTimer.textContent = timer;
     clearInterval(interval);
+
+    // Shuffle questions array
+    shuffleArray(questions);
 }
 
 // This will hide/show the different sections and their children elements in the HTML based on the value provided
@@ -297,6 +306,29 @@ function setPageVisibility(pageToShow) {
         homePage.style.display = "none";
         questionsPage.style.display = "none";
         resultsPage.style.display = "none";
+    }
+}
+
+// This will remove all children elements from the parent element provided
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.lastChild);
+    };
+}
+
+// This will shuffle the array provided
+function shuffleArray(arrOriginal) {
+    
+    for (var i = 0; i < 10; i++) {
+        // Randomly pick an array element index and its new position
+        var randomElement = Math.floor(Math.random() * arrOriginal.length);
+        var newPosition = Math.floor(Math.random() * arrOriginal.length);
+    
+        // Remove (pop) the array element
+        var arrElement = arrOriginal.splice(randomElement, 1);
+
+        // Reinsert the removed element in its new position
+        arrOriginal.splice(newPosition, 0, arrElement[0]);
     }
 }
 
