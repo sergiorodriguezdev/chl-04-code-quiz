@@ -1,44 +1,109 @@
 // Array of questions objects
 const questions = [
     {
-        question: "question 1",
+        question: "How do you link a JavaScript file with an HTML file?",
         choices: [
-            "choice 1",
-            "choice 2",
-            "choice 3",
-            "choice 4"
-        ],
-        answerIdx: 0 
-    },
-    {
-        question: "question 2",
-        choices: [
-            "choice 1",
-            "choice 2",
-            "choice 3",
-            "choice 4"
+            "If they share the same parent folder, they're automatically linked",
+            "Using a <code>script</code> tag inside the <code>body</code> element",
+            "Using a <code>script</code>  tag inside the <code>head</code> element",
+            "Using a <code>link</code> tag inside the <code>head</code> element"
         ],
         answerIdx: 1 
     },
     {
-        question: "question 3",
+        question: "How do you declare a variable?",
         choices: [
-            "choice 1",
-            "choice 2",
-            "choice 3",
-            "choice 4"
+            "Use the <code>var</code> keyword followed by the variable name",
+            "Specify the variable name and assign it a value",
+            "You must use the <code>var</code> keyword followed by the variable name and assign it a value",
+            "All of the above"
+        ],
+        answerIdx: 3 
+    },
+    {
+        question: "What is the main difference between a variable and an array?",
+        choices: [
+            "A variable can store one value whereas an array can store multiple values",
+            "They are the same",
+            "A variable can store multple values whereas an array can store one value",
+            "None of the above"
+        ],
+        answerIdx: 0
+    },
+    {
+        question: "To access the first element of an array, use index number ___",
+        choices: [
+            "1",
+            "\"first\"",
+            "0",
+            "Use the array name, this will always return its first element"
         ],
         answerIdx: 2
     },
     {
-        question: "question 4",
+        question: "A strict equal operator has ___ equal (<code>=</code>) signs",
         choices: [
-            "choice 1",
-            "choice 2",
-            "choice 3",
-            "choice 4"
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        answerIdx: 2
+    },
+    {
+        question: "Which value will cause the <code>console.log</code> statement to execute in this <code>if</code> statement?\n\
+        <pre>\
+        <code>if (myBoolean) {\n\
+            console.log(\"Success!\");\n\
+        }</code>\
+        </pre>",
+        choices: [
+            "<code>myBoolean = true;</code>",
+            "<code>myBoolean = 1;</code>",
+            "<code>myBoolean = \"1\";</code>",
+            "All of the above"
         ],
         answerIdx: 3
+    },
+    {
+        question: "The most common loop used to iterate through elements of an array is ___",
+        choices: [
+            "A <code>do-while</code> loop",
+            "A <code>while</code> loop",
+            "A <code>for</code> loop",
+            "None of the above"
+        ],
+        answerIdx: 2
+    },
+    {
+        question: "Two types of functions in Javascript are: ",
+        choices: [
+            "Defined and Undefined",
+            "Return and Void",
+            "True and False",
+            "Named and Anonymous"
+        ],
+        answerIdx: 3
+    },
+    {
+        question: "You can access an Object property using bracket or ___ notation",
+        choices: [
+            "dot",
+            "index",
+            "function",
+            "loop"
+        ],
+        answerIdx: 0
+    },
+    {
+        question: "The value of the <code>this</code> keyword varies depending on its: ",
+        choices: [
+            "Declaration",
+            "Scope",
+            "Location in the .js file",
+            "Assignment"
+        ],
+        answerIdx: 1
     }
 ];
 
@@ -83,7 +148,7 @@ function loadHS() {
             var liEl = document.createElement("li");
 
             liEl.textContent = highScores[i].initials + " - " + highScores[i].score;
-
+            
             lstHighScores.appendChild(liEl);
         }
     }
@@ -135,7 +200,7 @@ lstChoices.addEventListener("click", function(event) {
     // Otherwise, stop execution
     var choiceEl = event.target;
     
-    if (choiceEl.matches("li")){
+    if (choiceEl.matches("li") || choiceEl.parentElement.matches("li")){
         // Grab the data-* attribute from the li element that was clicked
         var clickedIdx = parseInt(choiceEl.getAttribute("data-choice-idx"));
 
@@ -172,7 +237,8 @@ function populateQuestion() {
         return;
     }
 
-    questionHeader.textContent = questions[currentQuestionIdx].question;
+    // questionHeader.textContent = questions[currentQuestionIdx].question;
+    questionHeader.innerHTML = questions[currentQuestionIdx].question;
 
     // Remove all children elements from choices list ol element
     removeAllChildren(lstChoices);
@@ -183,7 +249,8 @@ function populateQuestion() {
     questions[currentQuestionIdx].choices.forEach(function(choice, index) {
         var tmpChoice = document.createElement("li");
 
-        tmpChoice.textContent = choice;
+        // tmpChoice.textContent = choice;
+        tmpChoice.innerHTML = choice;
         tmpChoice.setAttribute("data-choice-idx", index);
 
         lstChoices.appendChild(tmpChoice);
