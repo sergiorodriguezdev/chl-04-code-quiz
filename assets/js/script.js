@@ -160,8 +160,6 @@ var btnStartQuiz = document.getElementById("start-quiz");
 // home-page listeners
 // Start Quiz button on click listener
 btnStartQuiz.addEventListener("click", function() {
-    // Shuffle questions array
-
 
     // Initialize timer
     timer = 75;
@@ -189,18 +187,29 @@ btnStartQuiz.addEventListener("click", function() {
 // Get questions-page children elements
 var questionHeader = document.getElementById("question");
 var lstChoices = document.getElementById("choices");
-var message = document.getElementById("msg");
+var messageQuestions = document.getElementById("msg-questions");
 
 // questions-page listeners
 // Choice on click listener
 lstChoices.addEventListener("click", function(event) {
     // event.preventDefault();
 
-    // Grab element that was clicked. If it's a li element, then check if selected choice is correct answer. 
-    // Otherwise, stop execution
-    var choiceEl = event.target;
+    var choiceEl = null;
+
+    // If the element that was clicked is a 'li' element then grab this element
+    // else if its parent is a 'li' element then grab the parent instead
+    //
+    // > I had to add this check because I am injecting some 'code' children elements via 'innerHTML' when
+    //  populating the list of choices with 'li' elements
+    if (event.target.matches("li")) {
+        choiceEl = event.target;
+    } else if (event.target.parentElement.matches("li")) {
+        choiceEl = event.target.parentElement;
+    }
     
-    if (choiceEl.matches("li") || choiceEl.parentElement.matches("li")){
+    // Check that the element is not null 
+    // Otherwise, stop execution
+    if (choiceEl !== null) {
         // Grab the data-* attribute from the li element that was clicked
         var clickedIdx = parseInt(choiceEl.getAttribute("data-choice-idx"));
 
@@ -209,9 +218,11 @@ lstChoices.addEventListener("click", function(event) {
         //  else, subtract penalty
         // Move on to next question
         if (clickedIdx === questions[currentQuestionIdx].answerIdx) {
-            message.textContent = "Correct!";
+            messageQuestions.textContent = "Correct!";
+            messageResults.textContent = messageQuestions.textContent;
         } else {
-            message.textContent = "Wrong :(";
+            messageQuestions.textContent = "Wrong :(";
+            messageResults.textContent = messageQuestions.textContent;
             timer -= penalty;
         }
 
@@ -225,13 +236,17 @@ lstChoices.addEventListener("click", function(event) {
 
 // Populate question page elements
 function populateQuestion() {
+    // If this is the first question, clear value of the message element
+    // If the end of the questions array is reached, then stop the timer and move to the results page
     if (currentQuestionIdx === 0) {
-        message.textContent = "";
+        messageQuestions.textContent = "";
+        messageResults.textContent = messageQuestions.textContent;
     } else if (currentQuestionIdx >= questions.length) {
         clearInterval(interval);
             
         setPageVisibility("results")
 
+        intervalTimer.textContent = timer;
         finalScore.textContent = timer;
 
         return;
@@ -261,6 +276,7 @@ function populateQuestion() {
 var finalScore = document.getElementById("final-score");
 var txtInitials = document.getElementById("initials");
 var btnInitialsSubmit = document.getElementById("initials-submit");
+var messageResults = document.getElementById("msg-results");
 
 // resuts-page listeners
 // Submit button on click listener
