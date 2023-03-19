@@ -1,0 +1,119 @@
+/* CSS variables */
+:root {
+    --first-color: #b5c2b7;
+    --second-color: #8c93a8;
+    --third-color: #62466b;
+    --fourth-color: #45364b;
+    --fifth-color: #2d2327;
+    --code-font: 'Courier New', Courier, monospace;
+    --circular-border-radius: 50%;
+}
+
+/* Universal selector */
+* {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    color: var(--second-color);
+}
+
+body {
+    width: 80%;
+    background-color: var(--third-color);
+    margin: auto;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+button {
+    border: 2px solid var(--second-color);
+    border-radius: 3px;
+    background-color: var(--fourth-color);
+}
+
+button:hover {
+    cursor: pointer;
+    border-color: var(--first-color);
+}
+
+pre, code {
+    font-family: var(--code-font);
+    font-size: inherit;
+    text-align: left;
+    margin: 0;
+}
+
+#nav-bar {
+    width: 100%;
+    height: 30px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#questions-page, #results-page {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+}
+
+section {
+    width: 75%;
+    margin: 10px 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#choices li {
+    background-color: var(--fourth-color);
+    margin: 5px 0;
+    padding: 0 5px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+#choices li:hover {
+    cursor: pointer;
+    border-color: var(--first-color);
+}
+
+#msg {
+    width: 100%;
+    border-top: 2px solid var(--fourth-color);
+    font-style: italic;
+    font-size: 24px;
+    padding-left: 10%;
+}
+
+#timer, #final-score {
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+#high-scores-list {
+    width: 50%;
+    text-align: center;
+}
+
+#high-scores-list li:nth-child(odd) {
+    background-color: var(--fifth-color);
+}
+
+#hs-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

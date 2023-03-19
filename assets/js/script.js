@@ -119,6 +119,7 @@ var navigationBar = document.getElementById("nav-bar");
 var homePage = document.getElementById("home-page");
 var questionsPage = document.getElementById("questions-page");
 var resultsPage = document.getElementById("results-page");
+var msgSection = document.getElementById("msg-section");
 var highScoresPage = document.getElementById("high-scores-page");
 
 // Get nav-bar children elements
@@ -187,7 +188,7 @@ btnStartQuiz.addEventListener("click", function() {
 // Get questions-page children elements
 var questionHeader = document.getElementById("question");
 var lstChoices = document.getElementById("choices");
-var messageQuestions = document.getElementById("msg-questions");
+// var messageQuestions = document.getElementById("msg-questions");
 
 // questions-page listeners
 // Choice on click listener
@@ -218,11 +219,11 @@ lstChoices.addEventListener("click", function(event) {
         //  else, subtract penalty
         // Move on to next question
         if (clickedIdx === questions[currentQuestionIdx].answerIdx) {
-            messageQuestions.textContent = "Correct!";
-            messageResults.textContent = messageQuestions.textContent;
+            message.textContent = "✅ Correct! ✅";
+            // messageResults.textContent = messageQuestions.textContent;
         } else {
-            messageQuestions.textContent = "Wrong :(";
-            messageResults.textContent = messageQuestions.textContent;
+            message.textContent = "❌ Wrong :( ❌";
+            // messageResults.textContent = messageQuestions.textContent;
             timer -= penalty;
         }
 
@@ -239,8 +240,8 @@ function populateQuestion() {
     // If this is the first question, clear value of the message element
     // If the end of the questions array is reached, then stop the timer and move to the results page
     if (currentQuestionIdx === 0) {
-        messageQuestions.textContent = "";
-        messageResults.textContent = messageQuestions.textContent;
+        message.textContent = "";
+        // messageResults.textContent = messageQuestions.textContent;
     } else if (currentQuestionIdx >= questions.length) {
         clearInterval(interval);
             
@@ -276,7 +277,7 @@ function populateQuestion() {
 var finalScore = document.getElementById("final-score");
 var txtInitials = document.getElementById("initials");
 var btnInitialsSubmit = document.getElementById("initials-submit");
-var messageResults = document.getElementById("msg-results");
+// var messageResults = document.getElementById("msg-results");
 
 // resuts-page listeners
 // Submit button on click listener
@@ -323,6 +324,9 @@ btnInitialsSubmit.addEventListener("click", function(event) {
     loadHS();
 });
 
+// Get msg-section children elements
+var message = document.getElementById("msg");
+
 // Get high-scores-page children elements
 var lstHighScores = document.getElementById("high-scores-list");
 var btnGoBack = document.getElementById("go-back");
@@ -356,39 +360,44 @@ function init() {
     shuffleArray(questions);
 }
 
-// This will hide/show the different sections and their children elements in the HTML based on the value provided
+// This will hide the different sections and their children elements in the HTML based on the value provided
+// Set display to empty string for CSS styling to override
 function setPageVisibility(pageToShow) {
     if (pageToShow === "home") {
-        navigationBar.style.display = "block";
-        homePage.style.display = "block";
+        navigationBar.style.display = "";
+        homePage.style.display = "";
 
         questionsPage.style.display = "none";
         resultsPage.style.display = "none";
+        msgSection.style.display = "none"
         highScoresPage.style.display = "none";
 
     } else if (pageToShow === "questions") {
-        navigationBar.style.display = "block";
-        questionsPage.style.display = "block";
+        navigationBar.style.display = "";
+        questionsPage.style.display = "";
+        msgSection.style.display = ""
 
         homePage.style.display = "none";
         resultsPage.style.display = "none";
         highScoresPage.style.display = "none";
 
     } else if (pageToShow === "results") {
-        navigationBar.style.display = "block";
-        resultsPage.style.display = "block";
+        navigationBar.style.display = "";
+        resultsPage.style.display = "";
+        msgSection.style.display = ""
 
         homePage.style.display = "none";
         questionsPage.style.display = "none";
         highScoresPage.style.display = "none";
 
     } else if (pageToShow === "high-scores") {
-        highScoresPage.style.display = "block";
+        highScoresPage.style.display = "";
         
         navigationBar.style.display = "none";
         homePage.style.display = "none";
         questionsPage.style.display = "none";
         resultsPage.style.display = "none";
+        msgSection.style.display = "none"
     }
 }
 
