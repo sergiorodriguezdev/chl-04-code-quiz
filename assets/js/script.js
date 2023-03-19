@@ -1,4 +1,4 @@
-// Array of questions objects
+// Array of question objects
 const questions = [
     {
         question: "How do you link a JavaScript file with an HTML file?",
@@ -136,6 +136,8 @@ btnViewHS.addEventListener("click", function() {
     loadHS();
 });
 
+
+// This will load the list of high scores from localStorage
 function loadHS() {
     // Remove all children elements from high scores list ol element
     removeAllChildren(lstHighScores);
@@ -143,7 +145,7 @@ function loadHS() {
     // Load high scores objects (array) from localStorage
     var highScores = JSON.parse(localStorage.getItem("Quiz-High-Scores"));
 
-    // Create li elements for each entry in array - array should be presorted
+    // Create li elements for each entry in array - assumes array is presorted
     if (highScores !== null) {
         for (var i = 0; i < highScores.length; i++) {
             var liEl = document.createElement("li");
@@ -179,6 +181,7 @@ btnStartQuiz.addEventListener("click", function() {
 
     }, 1000);
 
+    // Start the quiz sequence, set the questions array index to 0
     currentQuestionIdx = 0;
     setPageVisibility("questions");
     intervalTimer.textContent = timer;
@@ -188,13 +191,11 @@ btnStartQuiz.addEventListener("click", function() {
 // Get questions-page children elements
 var questionHeader = document.getElementById("question");
 var lstChoices = document.getElementById("choices");
-// var messageQuestions = document.getElementById("msg-questions");
 
 // questions-page listeners
 // Choice on click listener
 lstChoices.addEventListener("click", function(event) {
-    // event.preventDefault();
-
+    
     var choiceEl = null;
 
     // If the element that was clicked is a 'li' element then grab this element
@@ -214,16 +215,13 @@ lstChoices.addEventListener("click", function(event) {
         // Grab the data-* attribute from the li element that was clicked
         var clickedIdx = parseInt(choiceEl.getAttribute("data-choice-idx"));
 
-        // Compare the selection with index of the correct answer
+        // Compare the selection with index of the correct answer stored in question object
         // If correct, then move on to next question
-        //  else, subtract penalty
-        // Move on to next question
+        //  else, subtract penalty first before moving on to next question
         if (clickedIdx === questions[currentQuestionIdx].answerIdx) {
             message.textContent = "✅ Correct! ✅";
-            // messageResults.textContent = messageQuestions.textContent;
         } else {
             message.textContent = "❌ Wrong :( ❌";
-            // messageResults.textContent = messageQuestions.textContent;
             timer -= penalty;
         }
 
@@ -241,7 +239,6 @@ function populateQuestion() {
     // If the end of the questions array is reached, then stop the timer and move to the results page
     if (currentQuestionIdx === 0) {
         message.textContent = "";
-        // messageResults.textContent = messageQuestions.textContent;
     } else if (currentQuestionIdx >= questions.length) {
         clearInterval(interval);
             
@@ -253,7 +250,7 @@ function populateQuestion() {
         return;
     }
 
-    // questionHeader.textContent = questions[currentQuestionIdx].question;
+    // Populate header element with question
     questionHeader.innerHTML = questions[currentQuestionIdx].question;
 
     // Remove all children elements from choices list ol element
@@ -265,7 +262,6 @@ function populateQuestion() {
     questions[currentQuestionIdx].choices.forEach(function(choice, index) {
         var tmpChoice = document.createElement("li");
 
-        // tmpChoice.textContent = choice;
         tmpChoice.innerHTML = choice;
         tmpChoice.setAttribute("data-choice-idx", index);
 
@@ -277,7 +273,6 @@ function populateQuestion() {
 var finalScore = document.getElementById("final-score");
 var txtInitials = document.getElementById("initials");
 var btnInitialsSubmit = document.getElementById("initials-submit");
-// var messageResults = document.getElementById("msg-results");
 
 // resuts-page listeners
 // Submit button on click listener
@@ -293,6 +288,7 @@ btnInitialsSubmit.addEventListener("click", function(event) {
         return;
     }
 
+    // Create temp object to be pushed into array of high scores retrieved from localStorage
     var tmpHSObject = {
         initials: tmpInitials,
         score: tmpScore
@@ -320,6 +316,7 @@ btnInitialsSubmit.addEventListener("click", function(event) {
     // Move to high scores page
     txtInitials.value = "";
     setPageVisibility("high-scores")
+
     // Call load high scores function
     loadHS();
 });
@@ -335,7 +332,7 @@ var btnClearHS = document.getElementById("clear-high-scores");
 // high-scores-page listeners
 // Go Back button on click listener
 btnGoBack.addEventListener("click", function() {
-    // Go back to initial state aka home page
+    // Go back to initial state - aka home page
     init();
 });
 
@@ -350,8 +347,10 @@ btnClearHS.addEventListener("click", function() {
 
 // Initialize web app
 function init() {
+    // Start with home page, hide other "pages"
     setPageVisibility("home");
 
+    // Clear timer just in case
     timer = 0;
     intervalTimer.textContent = timer;
     clearInterval(interval);
@@ -424,4 +423,5 @@ function shuffleArray(arrOriginal) {
     }
 }
 
+// Start the web app
 init();

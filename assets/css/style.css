@@ -11,17 +11,19 @@
 
 /* Universal selector */
 * {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
     color: var(--second-color);
 }
 
+/* Style body */
 body {
     width: 80%;
     background-color: var(--third-color);
     margin: auto;
 }
 
+/* Style header elements */
 h1 {
     font-size: 36px;
     text-align: center;
@@ -32,17 +34,20 @@ h2 {
     text-align: center;
 }
 
+/* Style all buttons */
 button {
     border: 2px solid var(--second-color);
     border-radius: 3px;
     background-color: var(--fourth-color);
 }
 
+/* Style all buttons' on hover behavior */
 button:hover {
     cursor: pointer;
     border-color: var(--first-color);
 }
 
+/* Style pre and code elements used in questions and choices */
 pre, code {
     font-family: var(--code-font);
     font-size: inherit;
@@ -50,6 +55,7 @@ pre, code {
     margin: 0;
 }
 
+/* Style the navigation bar */
 #nav-bar {
     width: 100%;
     height: 30px;
@@ -60,13 +66,7 @@ pre, code {
     align-items: center;
 }
 
-#questions-page, #results-page {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: space-between;
-}
-
+/* Style all section elements */
 section {
     width: 75%;
     margin: 10px 0;
@@ -76,6 +76,15 @@ section {
     align-items: center;
 }
 
+/* Style the questions and result pages - these are styled slightly different from other section elements */
+#questions-page, #results-page {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+}
+
+/* Style the multiple choice elements */
 #choices li {
     background-color: var(--fourth-color);
     margin: 5px 0;
@@ -84,11 +93,20 @@ section {
     border-radius: 3px;
 }
 
+/* Style the multiple choice elements' on hover behavior */
 #choices li:hover {
     cursor: pointer;
     border-color: var(--first-color);
 }
 
+/* Style the timer and final score elements */
+#timer, #final-score {
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+/* Style the correct/wrong message box */
 #msg {
     width: 100%;
     border-top: 2px solid var(--fourth-color);
@@ -97,21 +115,18 @@ section {
     padding-left: 10%;
 }
 
-#timer, #final-score {
-    text-decoration: underline;
-    font-weight: 700;
-    font-size: 24px;
-}
-
+/* Style the list of high scores */
 #high-scores-list {
     width: 50%;
     text-align: center;
 }
 
+/* Create alternating row colors for the list of high scores */
 #high-scores-list li:nth-child(odd) {
     background-color: var(--fifth-color);
 }
 
+/* Style the high score buttons div */
 #hs-buttons {
     width: 100%;
     display: flex;
