@@ -219,9 +219,13 @@ lstChoices.addEventListener("click", function(event) {
         // If correct, then move on to next question
         //  else, subtract penalty first before moving on to next question
         if (clickedIdx === questions[currentQuestionIdx].answerIdx) {
-            message.textContent = "✅ Correct! ✅";
+            message.textContent = "Correct!";
+            // Set data-* attribute to use before/after pseudo-elements
+            message.dataset.result = "correct";
         } else {
-            message.textContent = "❌ Wrong :( ❌";
+            message.textContent = "Wrong :(";
+            // Set data-* attribute to use before/after pseudo-elements
+            message.dataset.result = "wrong";
             timer -= penalty;
         }
 

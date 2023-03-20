@@ -115,6 +115,23 @@ section {
     padding-left: 10%;
 }
 
+/* Pseudo-elements to add green checkmark/red X based on data-result attribute */
+#msg[data-result="correct"]::before {
+    content: '✅ ';
+}
+
+#msg[data-result="correct"]::after {
+    content: ' ✅';
+}
+
+#msg[data-result="wrong"]::before {
+    content: '❌ ';
+}
+
+#msg[data-result="wrong"]::after {
+    content: ' ❌';
+}
+
 /* Style the list of high scores */
 #high-scores-list {
     width: 50%;
